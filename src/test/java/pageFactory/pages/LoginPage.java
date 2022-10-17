@@ -7,12 +7,16 @@ import org.openqa.selenium.support.PageFactory;
 import actionFactory.ElActions;
 import driverFactory.*;
 
-public class LoginPage {
+public class LoginPage extends BasePage{
 
-	public ElActions act;
-	
 	@FindBy(name = "email")
 	public WebElement emailinput;
+	
+	@FindBy(name = "password")
+	public WebElement passwordinput;
+	
+	@FindBy(xpath = "//button[@type='submit']")
+	public WebElement loginbtn;
 	
 	public LoginPage() throws Exception {
 	    PageFactory.initElements(Driver.get(), this);
@@ -21,7 +25,13 @@ public class LoginPage {
 	
 	public LoginPage userLogin(String email, String password) throws Exception {
 		
+		ElActions act = new ElActions();
+		
 		act.sendkey(emailinput, email);
+		
+		act.sendkey(passwordinput, password);
+		
+		act.click(loginbtn);
 		
 		return this;
 	}
