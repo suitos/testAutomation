@@ -1,0 +1,23 @@
+{
+	"admin": {
+		"firstName": "",
+		"lastName": "",
+		"phoneNumber": "",
+		"email": "admin@phptravels.com",
+		"password": "demoadmin"
+	},
+	
+	"messages": {
+		"emailWrongFormat": "The Email field must contain a valid email address.!",
+		"wrongCredentials": "Invalid Login Credentials",
+		
+		"emptyCredentials": [
+			"The Email field is required.",
+			"The Password field is required."
+			],
+		
+		"emptyEmail": "The Email field is required.",
+		"emptyPassword": "The Password field is required."
+		
+	}
+}
