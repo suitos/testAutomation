@@ -1,5 +1,7 @@
 package pageFactory.pages;
 
+import static org.testng.Assert.assertEquals;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -18,6 +20,9 @@ public class LoginPage extends BasePage{
 	@FindBy(xpath = "//button[@type='submit']")
 	public WebElement loginbtn;
 	
+	@FindBy(xpath = "//div[contains(@class,'alert')]")
+	public WebElement loginalert;
+	
 	public LoginPage() throws Exception {
 	    PageFactory.initElements(Driver.get(), this);
 	    
@@ -32,6 +37,17 @@ public class LoginPage extends BasePage{
 		act.sendkey(passwordinput, password);
 		
 		act.click(loginbtn);
+		
+		return this;
+	}
+	
+	public LoginPage checkFailedLogin(String alertmsg) throws Exception {
+		
+		ElActions act = new ElActions();
+		
+		act.waitText(loginalert, alertmsg);
+		
+		assertEquals(act.getText(loginalert), alertmsg);
 		
 		return this;
 	}
