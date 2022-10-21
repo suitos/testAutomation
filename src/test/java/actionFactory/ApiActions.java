@@ -82,42 +82,42 @@ public class ApiActions {
 			if (headers != null) {
 				request.headers(headers);
 				String qHeaders = queryableRequestSpecs.getHeaders().toString();
-				Logging.getLogger().info("Headers: " + qHeaders.getBytes());
+				Logging.getLogger().info("Request Headers: " + qHeaders.getBytes());
 
 			}
 
 			if (contentType != null) {
 				request.contentType(contentType);
 				String qContentType = queryableRequestSpecs.getContentType();
-				Logging.getLogger().info("Content Type: " + qContentType.getBytes());
+				Logging.getLogger().info("Request Content Type: " + qContentType.getBytes());
 				
 			}
 
 			if (formParams != null) {
 				request.formParams(formParams);
 				String qFormParams = queryableRequestSpecs.getFormParams().toString();
-				Logging.getLogger().info("Form params: " + qFormParams.getBytes());
+				Logging.getLogger().info("Request Form params: " + qFormParams.getBytes());
 				
 			}
 
 			if (queryParams != null) {
 				request.queryParams(queryParams);
 				String qQueryParams = queryableRequestSpecs.getQueryParams().toString();
-				Logging.getLogger().info("Query params: " + qQueryParams.getBytes());
+				Logging.getLogger().info("Request Query params: " + qQueryParams.getBytes());
 				
 			}
 
 			if (body != null) {
 				request.body(body);
 				String qBody = queryableRequestSpecs.getBody().toString();
-				Logging.getLogger().info("Body :" + qBody.getBytes());
+				Logging.getLogger().info("Request Body :" + qBody.getBytes());
 				
 			}
 
 			if (cookies != null) {
 				request.cookies(cookies);
 				String qCookies = queryableRequestSpecs.getCookies().toString();
-				Logging.getLogger().info("Cookies : " + qCookies.getBytes());
+				Logging.getLogger().info("Request Cookies : " + qCookies.getBytes());
 				
 			}
 
