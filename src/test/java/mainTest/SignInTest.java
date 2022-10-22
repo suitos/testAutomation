@@ -14,22 +14,14 @@ import utils.JsonReader;
 
 public class SignInTest extends BaseTest {
 
-	private JsonReader testData;
-	public ElActions actions;
-	public ApiTest api;
-	
-	@BeforeClass
-	public void setEnv(ITestContext context) throws Exception {
+	@BeforeClass(alwaysRun = true)
+	public void beforeClass(ITestContext context) throws Exception {
 		
 		Logging.createNewLogger(context.getCurrentXmlTest().getName().toString());
 		
-		testData = new JsonReader("src/test/resources/testData/phptravleTestData.json");
-		actions = new ElActions();
-		api = new ApiTest();
-		
 	}
 	
-	@BeforeMethod
+	@BeforeMethod(alwaysRun = true)
 	public void goTestUrl() throws Exception {
 
 		Pages.loginpage()
@@ -40,6 +32,7 @@ public class SignInTest extends BaseTest {
 	@Test(priority = 1, enabled = true)
 	public void testSignin() throws Exception {
 
+		ApiTest api = new ApiTest();
 		api.userSignInSuccess(testData.getTestData("admin.email"), testData.getTestData("admin.password"));
 		
 		Pages.loginpage()
