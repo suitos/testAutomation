@@ -1,112 +1,115 @@
 package actionFactory;
 
+import static org.testng.Assert.fail;
+
+import java.time.Duration;
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.JavascriptExecutor;
 
 import driverFactory.Driver;
-import pageFactory.pages.BasePage;
 
 public class ElActions {
 	
-	public ElActions() throws Exception {
-	    PageFactory.initElements(Driver.get(), this);
-	    
-	}
-	
     public ElActions click(By by) throws Exception {
-    	waitElement(by);
     	
-		Driver.get().findElement(by).click();
+    	if(checkElement(by)) Driver.get().findElement(by).click();
 		
+    	else fail(by + " is not clickable");
+    	
 		return this;
 	}
     
     public ElActions click(WebElement el) throws Exception {
     	
-    	waitElement(el);
-    	
-		el.click();
+    	if(checkElement(el)) el.click();
 		
+    	else fail(el + " is not clickable");
+    	
 		return this;
 	}
     
     public ElActions sendkey(WebElement el, String text) throws Exception {
     	
-    	waitElement(el);
-    	
-		el.sendKeys(text);
+    	if(checkElement(el)) {
+    		
+    		el.clear();
+    		Thread.sleep(500);
+    		
+    		el.sendKeys(text);
+    	}
 		
+    	else fail(el + " is not clickable");
+    	
 		return this;
 	}
     
     public String getText(WebElement el) throws Exception {
     	
-    	waitElement(el);
+    	if(checkElement(el)) return el.getText();
     	
-		return el.getText();
+    	else return null;
 		
 	}
     
     public String getText(By by) throws Exception {
     	
-    	waitElement(by);
-    	
-		return Driver.get().findElement(by).getText();
+    	if(checkElement(by)) return Driver.get().findElement(by).getText();
+		
+    	else return null;
+	}
+
+	public Boolean checkElement(By by) throws Exception {
+		WebDriverWait wait = new WebDriverWait(Driver.get(), Duration.ofSeconds(10));
+		
+		try {
+			((JavascriptExecutor) Driver.get()).executeScript("return document.readyState").equals("complete");
+			wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+			
+			return true;
+			
+		} catch (Exception e) {
+			
+			return false;
+		}
 		
 	}
-    
-    public void waitElement(By by) throws Exception {
-    	
-    	try {
-			WebDriverWait wait = new WebDriverWait(Driver.get(), 5);
-			wait.until(ExpectedConditions.visibilityOfElementLocated(by));
-		} catch (Exception e) {
-			
-			throw new Exception(by + " is not displayed");
-		}
+
+	public Boolean checkElement(WebElement el) throws Exception {
+		WebDriverWait wait = new WebDriverWait(Driver.get(), Duration.ofSeconds(10));
 		
-    }
-    
-    public void waitElement(WebElement el) throws Exception {
-    	
-    	try {
-			WebDriverWait wait = new WebDriverWait(Driver.get(), 5);
+		try {
+			((JavascriptExecutor) Driver.get()).executeScript("return document.readyState").equals("complete");
+			
 			wait.until(ExpectedConditions.visibilityOf(el));
-		} catch (Exception e) {
 			
-			throw new Exception(el + " is not displayed");
-		}
-		
-    }
-    
-    public void waitText(By by, String text) throws Exception {
-    	
-    	try {
-			WebDriverWait wait = new WebDriverWait(Driver.get(), 10);
-			wait.until(ExpectedConditions.textToBePresentInElementLocated(by, text));
+			return true;
 			
 		} catch (Exception e) {
 			
-			throw new Exception(by + " text is wrong [Expcted] " + text + " [Actual]" + Driver.get().findElement(by).getText());
+			return false;
 		}
+	}
+	
+	public Boolean checkElement(List<WebElement> list) throws Exception {
+		WebDriverWait wait = new WebDriverWait(Driver.get(), Duration.ofSeconds(10));
 		
-    }
-    
-    public void waitText(WebElement el, String text) throws Exception {
-    	
-    	try {
-			WebDriverWait wait = new WebDriverWait(Driver.get(), 10);
-			wait.until(ExpectedConditions.textToBePresentInElement(el, text));
+		try {
+			((JavascriptExecutor) Driver.get()).executeScript("return document.readyState").equals("complete");
+			
+			wait.until(ExpectedConditions.visibilityOfAllElements(list));
+			
+			return true;
 			
 		} catch (Exception e) {
 			
-			throw new Exception(el + " text is wrong [Expcted] " + text + " [Actual]" + el.getText());
+			return false;
 		}
-		
-		
-    }
+	}
+	
     
 }

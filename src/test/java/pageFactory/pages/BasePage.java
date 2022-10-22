@@ -1,6 +1,7 @@
 package pageFactory.pages;
 
 import org.openqa.selenium.InvalidArgumentException;
+import org.openqa.selenium.JavascriptExecutor;
 
 import driverFactory.*;
 import log.*;
@@ -12,7 +13,8 @@ public class BasePage {
 		try {
 			
 			Driver.get().get(url);
-
+			((JavascriptExecutor) Driver.get()).executeScript("return document.readyState").equals("complete");
+			
 			Logging.getLogger().info(url + " open completed!!");
 			
 		} catch (InvalidArgumentException e) {
