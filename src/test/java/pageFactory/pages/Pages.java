@@ -16,4 +16,12 @@ public class Pages {
 		return new Menu();
 	}
 	
+	public static CustomersPage customerspage() throws Exception {
+		return new CustomersPage();
+	}
+	
+	public static CustomersAddPage customersaddpage() throws Exception {
+		return new CustomersAddPage();
+	}
+	
 }

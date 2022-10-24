@@ -15,20 +15,11 @@ import driverFactory.Driver;
 
 public class ElActions {
 	
-    public ElActions click(By by) throws Exception {
-    	
-    	if(checkElement(by)) Driver.get().findElement(by).click();
-		
-    	else fail(by + " is not clickable");
-    	
-		return this;
-	}
-    
     public ElActions click(WebElement el) throws Exception {
     	
     	if(checkElement(el)) el.click();
 		
-    	else fail(el + " is not clickable");
+    	else fail(el + " click is failed!!");
     	
 		return this;
 	}
@@ -43,7 +34,7 @@ public class ElActions {
     		el.sendKeys(text);
     	}
 		
-    	else fail(el + " is not clickable");
+    	else fail(el + " sendkeys is failed!!");
     	
 		return this;
 	}
@@ -56,29 +47,6 @@ public class ElActions {
 		
 	}
     
-    public String getText(By by) throws Exception {
-    	
-    	if(checkElement(by)) return Driver.get().findElement(by).getText();
-		
-    	else return null;
-	}
-
-	public Boolean checkElement(By by) throws Exception {
-		WebDriverWait wait = new WebDriverWait(Driver.get(), Duration.ofSeconds(10));
-		
-		try {
-			((JavascriptExecutor) Driver.get()).executeScript("return document.readyState").equals("complete");
-			wait.until(ExpectedConditions.visibilityOfElementLocated(by));
-			
-			return true;
-			
-		} catch (Exception e) {
-			
-			return false;
-		}
-		
-	}
-
 	public Boolean checkElement(WebElement el) throws Exception {
 		WebDriverWait wait = new WebDriverWait(Driver.get(), Duration.ofSeconds(10));
 		
@@ -95,21 +63,4 @@ public class ElActions {
 		}
 	}
 	
-	public Boolean checkElement(List<WebElement> list) throws Exception {
-		WebDriverWait wait = new WebDriverWait(Driver.get(), Duration.ofSeconds(10));
-		
-		try {
-			((JavascriptExecutor) Driver.get()).executeScript("return document.readyState").equals("complete");
-			
-			wait.until(ExpectedConditions.visibilityOfAllElements(list));
-			
-			return true;
-			
-		} catch (Exception e) {
-			
-			return false;
-		}
-	}
-	
-    
 }

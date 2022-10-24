@@ -25,7 +25,7 @@ public class Menu {
 		openDashboardIfClosed();
 		
 		ElActions act = new ElActions();
-		act.click(By.xpath("//a[contains(., '"+ menu +"')]"));
+		act.click(Driver.get().findElement(By.xpath("//a[contains(., '"+ menu +"')]")));
 		
 		return this;
 	}
@@ -34,7 +34,7 @@ public class Menu {
 		openDashboardIfClosed();
 		
 		ElActions act = new ElActions();
-		act.click(By.xpath("//a[contains(@href, '"+ menu.toLowerCase() +"')]"));
+		act.click(Driver.get().findElement(By.xpath("//a[contains(@href, '"+ menu.toLowerCase() +"')]")));
 		
 		return this;
 	}

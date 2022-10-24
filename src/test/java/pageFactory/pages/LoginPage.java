@@ -2,14 +2,12 @@ package pageFactory.pages;
 
 import static org.testng.Assert.assertEquals;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import actionFactory.ElActions;
 import driverFactory.*;
-import pageFactory.component.Menu;
 
 public class LoginPage extends BasePage{
 
