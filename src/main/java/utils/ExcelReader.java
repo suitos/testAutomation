@@ -1,13 +1,13 @@
 package utils;
 
+import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.codehaus.groovy.runtime.StringGroovyMethods;
 
 import log.Logging;
 
@@ -25,13 +25,17 @@ public class ExcelReader {
 	private Sheet currentSheet;
 	private Map<String, Integer> columns;
 
-	public ExcelReader(File file) {
+	private Workbook workbooks;
+	
+	public ExcelReader(File file) throws EncryptedDocumentException, IOException {
 		spreadsheet = file;
 		columns = new HashMap<String, Integer>();
+		workbooks = WorkbookFactory.create(spreadsheet);
+		
 	}
 	
 	public void switchToSheet(String name) {
-		try (Workbook workbooks = WorkbookFactory.create(spreadsheet)) {
+		try {
 			currentSheet = workbooks.getSheet(name);
 			currentSheet.getRow(0).forEach(cell -> {
 				columns.put(cell.getStringCellValue(), cell.getColumnIndex());
@@ -44,13 +48,11 @@ public class ExcelReader {
 	
 	public int getRowCount(String name) throws InvalidFormatException, IOException {
 		
-		try (Workbook worksbooks = new XSSFWorkbook(spreadsheet)) {
-			Sheet testDataSheet = worksbooks.getSheet(name);
+			Sheet testDataSheet = workbooks.getSheet(name);
 
 			int rowCount = testDataSheet.getLastRowNum();
 				
 			return rowCount;
-		}
 			
 	}
 	
@@ -58,7 +60,7 @@ public class ExcelReader {
 		try {
 			Row dataRow = currentSheet.getRow(row - 1);
 			
-			return dataRow.getCell(columns.get(column)).toString();
+			return getCellDataAsString(dataRow.getCell(columns.get(column))).toString();
 			
 		} catch (NullPointerException e) {
 			
@@ -78,4 +80,28 @@ public class ExcelReader {
 		return getCellData(column, 2);
 	}
 	
+    private String getCellDataAsString(Cell cell) {
+    	
+    	String value = ""; 
+        
+    	if(cell != null) {
+
+    	    if(cell.getCellType() == CellType.STRING ) {
+    	        value = cell.getStringCellValue(); 
+    	    }
+
+    	    if(cell.getCellType() == CellType.NUMERIC ) {
+    	        value = Integer.toString((int)cell.getNumericCellValue());
+    	    }
+    	    
+    	    if(cell.getCellType() == CellType.BOOLEAN) {
+    	    	value = Boolean.toString(cell.getBooleanCellValue());
+    	    }
+    	    
+    	    
+    	}
+
+	    return value;
+    }
+    
 }
