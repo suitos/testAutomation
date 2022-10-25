@@ -5,26 +5,27 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import actionFactory.ElActions;
 import apiTest.ApiTest;
 import commonValues.Values;
 import log.Logging;
-import pageFactory.pages.Pages;
-import utils.JsonReader;
+import pageFactory.pages.LoginPage;
 
 public class SignInTest extends BaseTest {
 
+	private LoginPage loginpage;
 	@BeforeClass(alwaysRun = true)
 	public void beforeClass(ITestContext context) throws Exception {
 		
 		Logging.createNewLogger(context.getCurrentXmlTest().getName().toString());
+		
+		loginpage = new LoginPage();
 		
 	}
 	
 	@BeforeMethod(alwaysRun = true)
 	public void goTestUrl() throws Exception {
 
-		Pages.loginpage()
+		loginpage
 			.open(Values.BASEURL);
 		
 	}
@@ -35,7 +36,7 @@ public class SignInTest extends BaseTest {
 		ApiTest api = new ApiTest();
 		api.userSignInSuccess(testData.getTestData("admin.email"), testData.getTestData("admin.password"));
 		
-		Pages.loginpage()
+		loginpage
 			.userLogin(testData.getTestData("admin.email"), testData.getTestData("admin.password"));
 		
 	}

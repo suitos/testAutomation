@@ -11,18 +11,29 @@ import org.testng.annotations.Test;
 import apiTest.ApiTest;
 import commonValues.Values;
 import log.Logging;
-import pageFactory.pages.Pages;
+import pageFactory.component.Menu;
+import pageFactory.pages.CustomersAddPage;
+import pageFactory.pages.CustomersPage;
+import pageFactory.pages.LoginPage;
 import utils.ExcelReader;
-import utils.JsonReader;
 
 public class AddUserTest extends BaseTest{
 
+	private LoginPage loginpage;
+	private Menu menu;
+	private CustomersPage customerspage;
+	private CustomersAddPage customersaddpage;
+	
 	@BeforeClass(alwaysRun = true)
 	public void beforeClass(ITestContext context) throws Exception {
 		
 		Logging.createNewLogger(context.getCurrentXmlTest().getName().toString());
 		
-		testData = new JsonReader("src/test/resources/testData/phptravleTestData.json");
+		loginpage = new LoginPage();
+		menu = new Menu();
+		customerspage = new CustomersPage();
+		customersaddpage = new CustomersAddPage();
+		
 		exceltestData = new ExcelReader(new File("src/test/resources/testData/addCustomersTestData.xlsx"));
 		
 	}
@@ -34,10 +45,10 @@ public class AddUserTest extends BaseTest{
 		//api.userSignInSuccess(testData.getTestData("admin.email"), testData.getTestData("admin.password"));
 		api.userSignInSuccess();
 		
-		Pages.loginpage()
+		loginpage
 			.open(Values.BASEURL);
 		
-		Pages.loginpage()
+		loginpage
 			.userLogin(testData.getTestData("admin.email"), testData.getTestData("admin.password"));
 		
 	}
@@ -47,26 +58,26 @@ public class AddUserTest extends BaseTest{
 		
 		exceltestData.switchToSheet("addcustomers");
 		
-		Pages.menu()
+		menu
 			.goMenu("Accounts")
 			.goSubMenu("Customers");
 		
-		Pages.customerspage()
+		customerspage
 			.goCustomersAdd();
 		
 		//int row = exceltestData.getRowCount("addcustomers");
 
-		Pages.customersaddpage().addCustomers(
+		customersaddpage.addCustomers(
 				exceltestData.getCellData("First Name"),
 				exceltestData.getCellData("Last Name"), exceltestData.getCellData("Email"),
 				exceltestData.getCellData("Password"), exceltestData.getCellData("Mobile Number"),
 				exceltestData.getCellData("Country"), exceltestData.getCellData("Address1"),
 				exceltestData.getCellData("Address2"), exceltestData.getCellData("Subscriber"));
 
-		Pages.customerspage()
+		customerspage
 			.checkCustomersinCustomersPage(exceltestData.getCellData("Email"));
 		
-		Pages.customersaddpage()
+		customersaddpage
 			.checkCustomersinCustomersAddPage(
 				exceltestData.getCellData("First Name"),
 				exceltestData.getCellData("Last Name"), 
@@ -82,11 +93,11 @@ public class AddUserTest extends BaseTest{
 	@AfterGroups({"AddUser"})
 	public void deleteUser() throws Exception {
 
-		Pages.menu()
+		menu
 			.goMenu("Accounts")
 			.goSubMenu("Customers");
 		
-		Pages.customerspage()
+		customerspage
 			.deleteCustomers(exceltestData.getCellData("Email"));
 		
 	}
