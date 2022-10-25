@@ -3,15 +3,15 @@ package actionFactory;
 import static org.testng.Assert.fail;
 
 import java.time.Duration;
-import java.util.List;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 import org.openqa.selenium.JavascriptExecutor;
 
 import driverFactory.Driver;
+import log.Logging;
 
 public class ElActions {
 	
@@ -19,7 +19,11 @@ public class ElActions {
     	
     	if(checkElement(el)) el.click();
 		
-    	else fail(el + " click is failed!!");
+    	else {
+    		Logging.getLogger().error(el + " click is failed!!");
+			
+    		fail(el + " click is failed!!");
+    	}
     	
 		return this;
 	}
@@ -34,7 +38,11 @@ public class ElActions {
     		el.sendKeys(text);
     	}
 		
-    	else fail(el + " sendkeys is failed!!");
+    	else {
+    		Logging.getLogger().error(el + "sendkey is failed!!");
+			
+    		fail(el + " sendkeys is failed!!");
+    	}
     	
 		return this;
 	}
@@ -43,9 +51,29 @@ public class ElActions {
     	
     	if(checkElement(el)) return el.getText();
     	
-    	else return null;
+    	else {
+    		Logging.getLogger().error(el + "getText is failed!!");
+
+			fail(el + "getText is failed!!");
+			
+			return null;
+    	}
 		
 	}
+    
+    public String checkAttribute(WebElement el, String attribute) throws Exception {
+		
+    	if(checkElement(el)) {
+			
+		} else {
+			Logging.getLogger().error(el + "[Attribute]" + attribute + " checkAttribute is failed!!");
+			
+			fail(el + "[Attribute]" + attribute + " checkAttribute is failed!!");
+		}
+		
+		return el.getAttribute(attribute);
+    	
+    }
     
 	public Boolean checkElement(WebElement el) throws Exception {
 		WebDriverWait wait = new WebDriverWait(Driver.get(), Duration.ofSeconds(10));
