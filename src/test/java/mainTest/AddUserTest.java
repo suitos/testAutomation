@@ -3,9 +3,9 @@ package mainTest;
 import java.io.File;
 
 import org.testng.ITestContext;
+import org.testng.annotations.AfterGroups;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeGroups;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import apiTest.ApiTest;
@@ -79,4 +79,16 @@ public class AddUserTest extends BaseTest{
 
 	}
 	
+	@AfterGroups({"AddUser"})
+	public void deleteUser() throws Exception {
+
+		Pages.menu()
+			.goMenu("Accounts")
+			.goSubMenu("Customers");
+		
+		Pages.customerspage()
+			.deleteCustomers(exceltestData.getCellData("Email"));
+		
+	}
+
 }

@@ -91,4 +91,21 @@ public class ElActions {
 		}
 	}
 	
+
+	public Boolean checkElementInvisual(WebElement el) throws Exception {
+		WebDriverWait wait = new WebDriverWait(Driver.get(), Duration.ofSeconds(10));
+		
+		try {
+			((JavascriptExecutor) Driver.get()).executeScript("return document.readyState").equals("complete");
+			
+			wait.until(ExpectedConditions.invisibilityOf(el));
+			
+			return true;
+			
+		} catch (Exception e) {
+			
+			return false;
+		}
+	}
+	
 }
