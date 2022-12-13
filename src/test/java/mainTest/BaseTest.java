@@ -15,14 +15,16 @@ public class BaseTest {
 	
 	@BeforeSuite(alwaysRun = true)
 	public void setEnv() {
+		
 		testData = new JsonReader("src/test/resources/testData/phptravleTestData.json");
 		
 	}
 	
-	@AfterClass
+	@AfterClass(alwaysRun = true)
 	public void driverQuit() throws Exception {
 		
 		Driver.quit();
+		
 	}
 	
 }

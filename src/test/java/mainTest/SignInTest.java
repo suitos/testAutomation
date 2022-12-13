@@ -13,6 +13,7 @@ import pageFactory.pages.LoginPage;
 public class SignInTest extends BaseTest {
 
 	private LoginPage loginpage;
+	
 	@BeforeClass(alwaysRun = true)
 	public void beforeClass(ITestContext context) throws Exception {
 		
