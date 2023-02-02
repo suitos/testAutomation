@@ -2,6 +2,7 @@ package apiTest;
 
 import io.restassured.response.Response;
 import utils.ExcelReader;
+import utils.FileManager;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,10 +18,10 @@ import commonValues.Values;
 
 public class ApiTest {
 
+	ApiActions api = new ApiActions(Values.BASEURL);
+	
 	public ExcelReader apitestData;
 	
-	ApiActions api = new ApiActions(Values.BASEURL);
-
 	private static final int SUCCESS = 200;
 
 	// Services Names
@@ -28,7 +29,9 @@ public class ApiTest {
 
 	public ApiTest() throws EncryptedDocumentException, IOException {
 		
-		apitestData = new ExcelReader(new File("src/test/resources/testData/apiTestData.xlsx"));
+		//testdata path
+		apitestData = new ExcelReader(new FileManager().getTestDataFilePath("apiTestData.xlsx"));
+		//testdata tab
 		apitestData.switchToSheet("apis");
 		
 	}

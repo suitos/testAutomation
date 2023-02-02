@@ -22,7 +22,7 @@ public class FileManager {
 		return tempfilepath;
 	}
 	
-	public String getTestDataFilePath(String filename) {
+	public File getTestDataFilePath(String filename) {
 		
 		String testdatafolder = System.getProperty("os.name").toLowerCase().contains("mac") ? "/testdata/" : "\\testdata\\";
 		String testdatapath = System.getProperty("user.dir") + testdatafolder;
@@ -32,7 +32,7 @@ public class FileManager {
 			folder.mkdir();
 		}
 		
-		String testdatafilepath = testdatapath + filename;
+		File testdatafilepath = new File(testdatapath + filename);
 		
 		return testdatafilepath;
 	}
