@@ -7,7 +7,7 @@ import log.Logging;
 
 public class FileManager {
 
-	public String getDownloadFilePath(String filename) {
+	public File getDownloadFilePath(String filename) {
 		
 		String tempfolder = System.getProperty("os.name").toLowerCase().contains("mac") ? "/test-temp/" : "\\test-temp\\";
 		String temppath = System.getProperty("user.dir") + tempfolder;
@@ -17,7 +17,7 @@ public class FileManager {
 			folder.mkdir();
 		}
 		
-		String tempfilepath = temppath + filename;
+		File tempfilepath = new File(temppath + filename);
 		
 		return tempfilepath;
 	}
