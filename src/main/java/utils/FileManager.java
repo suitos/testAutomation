@@ -9,7 +9,7 @@ public class FileManager {
 
 	public File getDownloadFilePath(String filename) {
 		
-		String tempfolder = System.getProperty("os.name").toLowerCase().contains("mac") ? "/test-temp/" : "\\test-temp\\";
+		String tempfolder = System.getProperty("os.name").toLowerCase().contains("mac") ? "\\src\\test\\resources\\testdata\\": "/src/test/resources/testData/";
 		String temppath = System.getProperty("user.dir") + tempfolder;
 		
 		File folder = new File(temppath);
@@ -24,7 +24,8 @@ public class FileManager {
 	
 	public File getTestDataFilePath(String filename) {
 		
-		String testdatafolder = System.getProperty("os.name").toLowerCase().contains("mac") ? "/testdata/" : "\\testdata\\";
+		String testdatafolder = System.getProperty("os.name").toLowerCase().contains("mac") ? "\\src\\test\\resources\\testdata\\": "/src/test/resources/testData//";
+		
 		String testdatapath = System.getProperty("user.dir") + testdatafolder;
 		
 		File folder = new File(testdatapath);
