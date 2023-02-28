@@ -11,13 +11,14 @@ import org.testng.annotations.Test;
 import apiTest.ApiTest;
 import commonValues.Values;
 import log.Logging;
+import module.makeEntity.MakeEntity;
 import pageFactory.component.Menu;
 import pageFactory.pages.CustomersAddPage;
 import pageFactory.pages.CustomersPage;
 import pageFactory.pages.LoginPage;
 import utils.ExcelReader;
 
-public class AddUserTest extends BaseTest{
+public class AddUserTest extends BaseTest {
 
 	private LoginPage loginpage;
 	private Menu menu;
@@ -34,7 +35,7 @@ public class AddUserTest extends BaseTest{
 		customerspage = new CustomersPage();
 		customersaddpage = new CustomersAddPage();
 		
-		exceltestData = new ExcelReader(new File("src/test/resources/testData/addCustomersTestData.xlsx"));
+		addCustomersTestData = new ExcelReader(new File("src/test/resources/testData/addCustomersTestData.xlsx"));
 		
 	}
 	
@@ -56,7 +57,7 @@ public class AddUserTest extends BaseTest{
 	@Test(priority = 1, enabled = true, groups = "AddUser")
 	public void addUserTest() throws Exception {
 		
-		exceltestData.switchToSheet("addcustomers");
+		addCustomersTestData.switchToSheet("addcustomers");
 		
 		menu
 			.goMenu("Accounts")
@@ -68,25 +69,56 @@ public class AddUserTest extends BaseTest{
 		//int row = exceltestData.getRowCount("addcustomers");
 
 		customersaddpage.addCustomers(
-				exceltestData.getCellData("First Name"),
-				exceltestData.getCellData("Last Name"), exceltestData.getCellData("Email"),
-				exceltestData.getCellData("Password"), exceltestData.getCellData("Mobile Number"),
-				exceltestData.getCellData("Country"), exceltestData.getCellData("Address1"),
-				exceltestData.getCellData("Address2"), exceltestData.getCellData("Subscriber"));
+				addCustomersTestData.getCellData("First Name"),
+				addCustomersTestData.getCellData("Last Name"), addCustomersTestData.getCellData("Email"),
+				addCustomersTestData.getCellData("Password"), addCustomersTestData.getCellData("Mobile Number"),
+				addCustomersTestData.getCellData("Country"), addCustomersTestData.getCellData("Address1"),
+				addCustomersTestData.getCellData("Address2"), addCustomersTestData.getCellData("Subscriber"));
 
 		customerspage
-			.checkCustomersinCustomersPage(exceltestData.getCellData("Email"));
+			.checkCustomersinCustomersPage(addCustomersTestData.getCellData("Email"));
 		
 		customersaddpage
 			.checkCustomersinCustomersAddPage(
-				exceltestData.getCellData("First Name"),
-				exceltestData.getCellData("Last Name"), 
-				exceltestData.getCellData("Email"),
-				exceltestData.getCellData("Mobile Number"), 
-				exceltestData.getCellData("Country"),
-				exceltestData.getCellData("Address1"), 
-				exceltestData.getCellData("Address2"),
-				exceltestData.getCellData("Subscriber"));
+				addCustomersTestData.getCellData("First Name"),
+				addCustomersTestData.getCellData("Last Name"), 
+				addCustomersTestData.getCellData("Email"),
+				addCustomersTestData.getCellData("Mobile Number"), 
+				addCustomersTestData.getCellData("Country"),
+				addCustomersTestData.getCellData("Address1"), 
+				addCustomersTestData.getCellData("Address2"),
+				addCustomersTestData.getCellData("Subscriber"));
+
+	}
+
+	@Test(priority = 2, enabled = true, groups = "AddUser", dataProvider = "addUserAnotherWayTest")
+	public void addUserAnotherWayTest(MakeEntity makeUser) throws Exception {
+
+		menu
+			.goMenu("Accounts")
+			.goSubMenu("Customers");
+		
+		customerspage
+			.goCustomersAdd();
+		
+		makeUser.makeEntity();
+		makeUser.saveEntitys();
+
+		customerspage
+			.checkCustomersinCustomersPage(addCustomersTestData.getCellData("Email"));
+		
+		addCustomersTestData.switchToSheet("addcustomers");
+		
+		customersaddpage
+			.checkCustomersinCustomersAddPage(
+				addCustomersTestData.getCellData("First Name"),
+				addCustomersTestData.getCellData("Last Name"), 
+				addCustomersTestData.getCellData("Email"),
+				addCustomersTestData.getCellData("Mobile Number"), 
+				addCustomersTestData.getCellData("Country"),
+				addCustomersTestData.getCellData("Address1"), 
+				addCustomersTestData.getCellData("Address2"),
+				addCustomersTestData.getCellData("Subscriber"));
 
 	}
 	
@@ -98,7 +130,7 @@ public class AddUserTest extends BaseTest{
 			.goSubMenu("Customers");
 		
 		customerspage
-			.deleteCustomers(exceltestData.getCellData("Email"));
+			.deleteCustomers(addCustomersTestData.getCellData("Email"));
 		
 	}
 
