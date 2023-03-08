@@ -8,7 +8,7 @@ import java.util.Map;
 
 import org.apache.poi.EncryptedDocumentException;
 
-import apiTest.ApiTest;
+import api.LoginAPI;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
@@ -46,7 +46,7 @@ public class ApiActions {
 		}
 		
 		public static RequestType returnRequestType() throws EncryptedDocumentException, IOException {
-			ApiTest api = new ApiTest();
+			LoginAPI api = new LoginAPI();
 			
 			switch(api.apitestData.getCellData("RequestType")) {
 			case "POST" : return POST;

@@ -8,7 +8,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeGroups;
 import org.testng.annotations.Test;
 
-import apiTest.ApiTest;
+import api.LoginAPI;
 import commonValues.Values;
 import log.Logging;
 import module.makeEntity.MakeEntity;
@@ -42,7 +42,7 @@ public class AddUserTest extends BaseTest {
 	@BeforeGroups({"AddUser"})
 	public void testSignin() throws Exception {
 
-		ApiTest api = new ApiTest();
+		LoginAPI api = new LoginAPI();
 		//api.userSignInSuccess(testData.getTestData("admin.email"), testData.getTestData("admin.password"));
 		api.userSignInSuccess();
 		

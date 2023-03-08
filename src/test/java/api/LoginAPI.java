@@ -1,4 +1,4 @@
-package apiTest;
+package api;
 
 import io.restassured.response.Response;
 import utils.ExcelReader;
@@ -16,7 +16,7 @@ import actionFactory.ApiActions;
 import actionFactory.ApiActions.RequestType;
 import commonValues.Values;
 
-public class ApiTest {
+public class LoginAPI {
 
 	ApiActions api = new ApiActions(Values.BASEURL);
 	
@@ -27,7 +27,7 @@ public class ApiTest {
 	// Services Names
 	private String signin_endpoint = "/login";
 
-	public ApiTest() throws EncryptedDocumentException, IOException {
+	public LoginAPI() throws EncryptedDocumentException, IOException {
 		
 		//testdata path
 		apitestData = new ExcelReader(new FileManager().getTestDataFilePath("apiTestData.xlsx"));
