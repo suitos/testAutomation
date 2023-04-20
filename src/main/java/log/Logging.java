@@ -8,8 +8,6 @@ import java.util.Properties;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-import com.mysql.cj.log.LogFactory;
-
 public class Logging {
 
 	private final static ThreadLocal<Logger> logFactory = new ThreadLocal<>();
